@@ -9,6 +9,40 @@ using System.IO;
 
 namespace prk2_var7
 {
+    /* 
+    *  NOTE: Additional libs are used: System.IO 
+    *  NOTE: You have to create a new project (Visual C# -> Console app) 
+    *          and repaste all in namespace brackets
+    *  NOTE: You have to build project first (ctrl+shift+b) and add code2.txt to builded .exe file's folder
+    *          than you can run it and test. You have to change line in code2.txt to "crash" it.
+    *  
+    * How it works: it detects IF and THEN then it looks for boolean expression between them and chek it.
+    *                   there's recursive for boolean expression because there could be more than one AND/OR
+    * 
+    * Step1: We should find IF and THEN to start work with boolean expression 
+    *           and they should be in a single example in other case show error.
+    * 
+    * Step2: We find boolean expression and we have to detect is there any AND/OR(1) or no(2)
+    * 
+    * (1)AND/OR - we have to divide to two parts: expression before AND/OR and after and recursivly 
+    *                   check both part in Step2.
+    *                   
+    * (2)no AND/OR - we've found single statement
+    *                   with some of that patterns:
+    *                       -smth </>/=/<=/>=/<> smth
+    *                       -smth
+    *                       
+    *                   in first way we have to be sure that there is correct delimiter and it's alone
+    *                   then we check both parts to it's grammar (not done)   
+    *                   
+    *                   in second way it could be func which returns boolean or boolean id
+    *                   so we just check that there is something. (still don't check grammar coz it wasn't realized)
+    *                   
+    * Step3: We have to check that there is something after THEN (just check it exists and don't check its grammar)                   
+    * Step4: Done :)                     
+    */      
+    
+                  
     class Program
     {
         private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "Begin",
@@ -161,7 +195,9 @@ namespace prk2_var7
                 }
                 // we found delimetr and it's alone
                 if (!delimF) {
-                    if (!(j < str.Length)) return false;
+                    if (!(j < str.Length))
+                        if (checkGrammar(part)) return true;
+                        else return false;
                     switch (str[j]) {
                         case '<':
                             if (str[j + 1] == '=' || str[j + 1] == '>') j++;

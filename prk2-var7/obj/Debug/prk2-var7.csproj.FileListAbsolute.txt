@@ -1,0 +1,6 @@
+c:\Users\mirOo\documents\visual studio 2015\Projects\prk-var7\prk2-var7\bin\Debug\prk2-var7.exe.config
+c:\Users\mirOo\documents\visual studio 2015\Projects\prk-var7\prk2-var7\bin\Debug\prk2-var7.exe
+c:\Users\mirOo\documents\visual studio 2015\Projects\prk-var7\prk2-var7\bin\Debug\prk2-var7.pdb
+c:\Users\mirOo\documents\visual studio 2015\Projects\prk-var7\prk2-var7\obj\Debug\prk2-var7.csprojResolveAssemblyReference.cache
+c:\Users\mirOo\documents\visual studio 2015\Projects\prk-var7\prk2-var7\obj\Debug\prk2-var7.exe
+c:\Users\mirOo\documents\visual studio 2015\Projects\prk-var7\prk2-var7\obj\Debug\prk2-var7.pdb

@@ -1,0 +1,12 @@
+procedure TForm1.Button3Click(SEnder: TObject);
+var i:extEnded; R:rec; kol:integer; 
+Begin
+    if (CEdit1.Text='') and (Kedit2.Text='') then ShowMessage('Please enter data');
+    else Reset(F);
+    i:=StrTofloat(CEdit1.Text);kol:=0;
+    while not EoF(F) do
+    Begin
+        Read(F,R); if R.Price<i then kol:=kol+1;
+    End;
+    KEdit2.Text:=IntToStr(kol)
+End;

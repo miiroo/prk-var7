@@ -179,7 +179,7 @@ namespace prk_var7
                                 //it's some delim not string const
                                 else {
                                     //add to log
-                                    addLog(word);
+                                    addLog(line[i].ToString());
                                     exitC = 1;
                                 }
                             }

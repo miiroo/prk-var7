@@ -1,1 +1,1 @@
-if (CEdit1.Text='') and (Kedit2.Text='') and k=1 then ShowMessage('Please enter data');
+if (CEdit1.Text='') and (Kedit2.Text='') then ShowMessage('Please enter data');

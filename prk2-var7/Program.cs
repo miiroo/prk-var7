@@ -39,14 +39,20 @@ namespace prk2_var7
     *                   so we just check that there is something. (still don't check grammar coz it wasn't realized)
     *                   
     * Step3: We have to check that there is something after THEN (just check it exists and don't check its grammar)                   
-    * Step4: Done :)                     
+    * Step4: Done :)     
+    * 
+    * 
+    * 
+    * Some useful grammar for that universal varian
+    * 
+    *                 
     */      
     
                   
     class Program
     {
         private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "Begin",
-            "if", "and", "then", "else", "while", "not", "do", "End", "=", "+", "<", ">"};
+            "if", "and", "then", "else", "while", "not", "do", "End", "=", "+", "<", ">", "*", "-", "/"};
         private static List<String> dArray = new List<String> { ".", ":", ";", "'", "(", ")", ":=", "," };
 
         //if (CEdit1.Text='') and (Kedit2.Text='' and d=1) then ShowMessage('Please enter data');
@@ -72,9 +78,12 @@ namespace prk2_var7
                 //check expression is correct
                 if (checkExpr(statement) && brackets == 0) {
                     string part = "";
-                    for (int i = posEnd + 4; i < str.Length; i++) part += str[i];
-                    if (checkGrammar(part)) Console.WriteLine("Success");
-                    else Console.WriteLine("Error: missing statement after THEN.");
+                    for (int i = posEnd + 4; i < str.Length; i++) {
+                        if (str[i] != ';') part += str[i];
+                        else i = str.Length;
+                    }
+                    if (checkGr(part)) Console.WriteLine("Success");
+                    else Console.WriteLine("Error: wrong or missing statement after THEN.");
                 }
                 else Console.WriteLine("Error: wrong bool expression.");
             }
@@ -196,21 +205,21 @@ namespace prk2_var7
                 // we found delimetr and it's alone
                 if (!delimF) {
                     if (!(j < str.Length))
-                        if (checkGrammar(part)) return true;
+                        if (checkGr(part)) return true;
                         else return false;
                     switch (str[j]) {
                         case '<':
                             if (str[j + 1] == '=' || str[j + 1] == '>') j++;
-                            part1 = checkGrammar(part);
+                            part1 = checkGr(part);
                             delimF = true;
                             break;
                         case '>':
                             if (str[j + 1] == '=') j++;
-                            part1 = checkGrammar(part);
+                            part1 = checkGr(part);
                             delimF = true;
                             break;
                         case '=':
-                            part1 = checkGrammar(part);
+                            part1 = checkGr(part);
                             delimF = true;
                             break;
                     }
@@ -220,21 +229,262 @@ namespace prk2_var7
                 else {
                     //we found delimetr
                     if (j<str.Length && (str[j] == '<' || str[j] == '>' || str[j] == '=')) return false;
-                    part2 = checkGrammar(part);
+                    part2 = checkGr(part);
                 }
             }
             if (part1 && part2) return true;
             return false;
         }
-        
+
+
         //we have to check statement grammar
         //it could be fuction or math operations
         //but in our case we just check that there is smth
-        static bool checkGrammar(string str) {
-            for (int i=0; i<str.Length; i++) {
-                if (str[i] != ' ') return true;
-            } 
+        //grammar for bool statement should be
+        //<statement> := <part> </>/=/<>... <part>
+        //here we get only <part> and check it's grammar 
+        //
+        //<part> := <id>|<const>|<assign> | <func>
+        //<id> := idd | idd.<id> | <func>.idd
+
+        //<assign> := <id> := <part>
+
+        //<func> := <id>(<arg>) | <id>(<arg>)
+        //<arg> := <argum> | <argum>,<arg>
+        //<argum> := <part>
+
+        //<const> := <strconst> | <numconst>
+
+        //<strconst> := '<str>'
+        //<str> := <str><letter> | <letter>
+        //<letter> := a..z | A..Z | 0..9 | space
+
+        //<numconst> := <number><operator><numconst> | <number>
+        //<operator> := +|-|*|/
+        //<number> := <number><digit> | <digit>
+        //<digit> := 0..9
+
+
+        //universal way
+        static bool checkGr(string str) {
+            if (str == "") return false; 
+            int j = 0;
+            //some cleaning from trash (, ) and spaces
+            while (j<str.Length && str[j] == ' ' || str[j] == '(')
+               str = str.Remove(j, 1);
+
+            j = str.Length - 1;
+            while (j > 0 && str[j] == ' ') {
+                str = str.Remove(j, 1);
+                j = str.Length - 1;
+            }
+
+            int countOpen = 0;
+            bool strConst = false;
+            for(int i = 0; i<str.Length; i++) {
+                if (!strConst) {
+                    if (str[i] == '(') countOpen++;
+                    if (str[i] == ')' && countOpen <= 0) {
+                        str = str.Remove(i, 1);
+                        i--;
+                    }
+                    if (str[i] == ')' && countOpen > 0) countOpen--;
+                }
+                if (str[i].ToString() == "'") strConst = !strConst;
+            }
+            //////////////end of cleaning////////////////////
+
+            //part is <numconst>
+            if (checkNum(str)) return true;
+            //part is <strconst>
+            if (checkStr(str)) return true;
+            //part is <func>
+            if (checkFunc(str)) return true;
+            //part is <assign>
+            if (checkAssign(str)) return true;
+            //part is <id>
+            if (checkId(str)) return true;
             return false;
         }
+
+
+        //<numconst> := <number><operator><numconst> | <number>
+        //<operator> := +|-|*|/
+        //<number> := <number><digit> | <digit>
+        //<digit> := 0..9
+        static bool checkNum(string str) {
+            if (str == "") return false;
+
+            bool rowNum = false;
+            bool rowOp = false;
+            for (int i=0; i<str.Length; i++) {
+                if (Char.IsLetter(str[i])) return false;
+
+                //it's digit
+                if (char.IsDigit(str[i])) {
+                    if (rowOp) rowOp = false;
+
+                    if (!rowNum) {
+                        rowNum = true;
+                        while (i < str.Length && Char.IsDigit(str[i])) i++;
+                        i--;
+                    }
+                    else return false;
+                }
+
+                //it's operator
+                if(keyArray.Contains(str[i].ToString())) {
+                    if (!rowNum) return false;
+                    rowNum = false;
+                    if (!rowOp) rowOp = true;
+                    else return false;
+                }
+            }
+            if (rowOp) return false;
+            return true;
+        }
+
+        //<strconst> := '<str>'
+        //<str> := <str><letter> | <letter>
+        //<letter> := a..z | A..Z | 0..9 | space
+        static bool checkStr(string str) {
+            if (str == "") return false;
+
+            bool findOne = false;
+            bool findSecond = false;
+             
+            for (int i=0; i<str.Length; i++) {
+                if (str[i] != ' ' || str[i].ToString() !="'") {
+                    if (!findOne) return false;
+                    if (findOne && findSecond) return false;
+                }
+               if (str[i].ToString() == "'") {
+                    if (!findOne) findOne = true;
+                    else {
+                        if (!findSecond) findSecond = true;
+                        else return false;
+                    }
+               }
+            }
+            return true;
+        }
+
+        //<func> := <id>(<arg>) | <id>()
+        //<arg> := <argum> | <arg>,<argum>
+        //<argum> := <part>
+        static bool checkFunc(string str) {
+            if (str == "") return false;
+
+            //check func name is correct function name
+            if (Char.IsDigit(str[0])) return false;
+            int j = 0;
+            string argum = "";
+            //find func (
+            while (j < str.Length && str[j] != '(') j++;
+            j++;
+            int countOpen = 1;
+            bool getArg = false;
+            bool space = false;
+            bool haveWord = false;
+            bool notALone = false;
+            bool getConst = false;
+            //get argument in func(<arg>)
+            while (j < str.Length && !getArg) {
+                if (str[j].ToString() == "'") getConst = !getConst;
+                if (!getConst) {
+                    while (j< str.Length && str[j] != ',' && countOpen != 0) {
+                        if (str[j] == '(') countOpen++;
+                        if (str[j] == ')') countOpen--;
+                        if (str[j] == ' ') {
+                            if (haveWord) space = true;
+                        }
+                        else {
+                            haveWord = true;
+                            if (countOpen != 0) {
+                                if (space) return false;
+                            }
+                        }
+                        if (countOpen != 0) {
+                            argum += str[j];
+                            j++;
+                        }
+                    }
+                    if (j<str.Length && str[j] == ',') notALone = true;
+                    if (countOpen == 0) getArg = true;
+
+                    if (notALone) {
+                        if (!checkGr(argum)) return false;
+                    }
+                    else {
+                        bool onlySpaces = true;
+                        for (int i = 0; i < argum.Length; i++)
+                            if (argum[i] != ' ') onlySpaces = false;
+                        if (!onlySpaces)
+                            if (!checkGr(argum)) return false;
+                    }
+
+                    haveWord = false;
+                    argum = "";
+                }
+                j++;
+            }
+            if (j < str.Length) {
+                for (int i = j; i< str.Length; i++)
+                    if (str[i] != ' ') return false;
+            }
+            if (getConst) return false;
+            if (!getArg) return false;
+            return true;
+        }
+
+        //<assign> := <id> := <part>
+        static bool checkAssign(string str) {
+            if (str == "") return false;
+            string word = "";
+            int j = 0;
+            while (j<str.Length && str[j] != ':') {
+                word += str[j];
+                j++;
+            }
+            if (j >= str.Length) return false;
+            if (!checkId(word)) return false;
+            if (str[j + 1] != '=') return false;
+            j += 2;
+            word = "";
+            while (j<str.Length) {
+                word += str[j];
+            }
+            if (!checkGr(word)) return false;
+
+            return true;
+        }
+
+        //<id> := idd | <id>.idd | <func>.idd
+        static bool checkId(string str) {
+            if (str == "") return false;
+            bool isFirst = true;
+
+            bool isFunc = false;
+            string word = "";
+            for (int j=0; j<str.Length; j++) {
+                if(str[j] != '.') {
+                    if(isFirst) {
+                        if (Char.IsDigit(str[j]))  return false;
+                        isFirst = false;
+                    }
+                    if (str[j] == '(') isFunc = true;
+                    word += str[j];
+                } else {
+                    isFunc = false;
+                    if (!checkGr(word)) return false;
+                    word = "";
+                    isFirst = true;
+                }
+            }
+            if (isFunc) return false;
+
+            return true;
+        }
+
     }
 }

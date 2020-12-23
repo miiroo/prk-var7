@@ -52,9 +52,9 @@ namespace prk_var7
     class Program
     {
 
-        private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "Begin",
+        private static List<String> keyArray = new List<String> {"function", "procedure", "TObject", "var", "integer", "Begin",
             "if", "and", "then", "else", "while", "not", "do", "End", "=", "+", "<", ">"};
-        private static List<String> dArray = new List<String> {".", ":", ";", "'", "(", ")", ":=", "," };
+        private static List<String> dArray = new List<String> {".", ":", ";", "'", "(", ")", ":=", ",", "#" };
         private static List<String> idArray = new List<String>();
         private static List<String> cnstArray = new List<String>();
         private static List<String> logLine = new List<String>();

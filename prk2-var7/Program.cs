@@ -109,7 +109,7 @@ namespace prk2_var7
                             if (str[i] != ';') part += str[i];
                             else i = str.Length;
                         }
-                        if (checkGr(part)) Console.WriteLine("Success");
+                        if (checkGram(part)) Console.WriteLine("Success");
                         else Console.WriteLine("Error: wrong or missing statement after THEN.");
                     }
                     else Console.WriteLine("Error: wrong bool expression.");
@@ -331,6 +331,44 @@ namespace prk2_var7
             return false;
         }
 
+        static bool checkGram(string str) {
+            if (str == "") return false;
+            int j = 0;
+            //some cleaning from trash (, ) and spaces
+            while (j < str.Length) {
+                if (str[j] == ' ' || str[j] == '(')
+                    str = str.Remove(j, 1);
+                else j = str.Length;
+            }
+
+            j = str.Length - 1;
+            while (j > 0 && str[j] == ' ') {
+                str = str.Remove(j, 1);
+                j = str.Length - 1;
+            }
+
+            int countOpen = 0;
+            bool strConst = false;
+            for (int i = 0; i < str.Length; i++) {
+                if (!strConst) {
+                    if (str[i] == '(') countOpen++;
+                    if (str[i] == ')' && countOpen <= 0) {
+                        str = str.Remove(i, 1);
+                        i--;
+                    }
+                    if (str[i] == ')' && countOpen > 0) countOpen--;
+                }
+                if (str[i].ToString() == "'") strConst = !strConst;
+            }
+            //////////////end of cleaning////////////////////
+
+           
+            //part is <func>
+            if (checkFunc(str)) return true;
+            //part is <assign>
+            if (checkAssign(str)) return true;
+            return false;
+        }
 
         //<numconst> := <number><operator><numconst> | <number>
         //<operator> := +|-|*|/

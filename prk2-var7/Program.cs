@@ -43,12 +43,36 @@ namespace prk2_var7
     * 
     * 
     * 
-    * Some useful grammar for that universal varian
+    * Some useful grammar for that universal IF variant:
     * 
-    *                 
-    */      
-    
-                  
+    * <state> ::= if <exp> then <statement>
+    * <statement> ::= <assign> | <func> 
+    * <exp> ::= <bool exp> |<exp> AND <exp> | <exp> OR <exp>
+    * <bool exp> ::= <part><compare symbol><part>
+    * <compare symbol> ::= < | > | = | <= | >= | <>
+    * <part> ::=  <id>|<const>|<assign>|<func>
+    * 
+    * <id> ::= idd | <id>.idd | <func>.idd     (note: idd - it's a grammar from previous work (lab 1))
+    * 
+    * <assign> ::= <id> := <part>
+    * 
+    * <func> := <id>(<arg>) | <id>()
+    * <arg> := <argum> | <arg>,<argum>
+    * <argum> := <part>
+    * 
+    * <strconst> := '<str>'
+    * <str> := <str><letter> | <letter>
+    * <letter> := a..z | A..Z | 0..9 | space
+    * 
+    * <numconst> := <number><operator><numconst> | <number>
+    * <operator> := +|-|*|/
+    * <number> := <number><digit> | <digit>
+    * <digit> := 0..9
+    * 
+    * 
+    */
+
+
     class Program
     {
         private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "Begin",
@@ -63,35 +87,49 @@ namespace prk2_var7
             Console.WriteLine(str);
             string statement = "";
             int brackets = 0;
+            if (fastAnalize(str)) {
 
-            //there is IF and THEN
-            if (findIfThen(str)) {
-                //get statement between IF and THEN
-                int posStart = str.IndexOf("if") + 2;
-                int posEnd = str.IndexOf("then");
-                for(int i = posStart; i<posEnd; i++) {
-                    if (str[i] == '(') brackets++;
-                    if (str[i] == ')') brackets--;
-                    statement += str[i];
-                }
-                
-                //check expression is correct
-                if (checkExpr(statement) && brackets == 0) {
-                    string part = "";
-                    for (int i = posEnd + 4; i < str.Length; i++) {
-                        if (str[i] != ';') part += str[i];
-                        else i = str.Length;
+                //there is IF and THEN
+                if (findIfThen(str)) {
+                    //get statement between IF and THEN
+                    int posStart = str.IndexOf("if") + 2;
+                    int posEnd = str.IndexOf("then");
+                    for (int i = posStart; i < posEnd; i++) {
+                        if (str[i] == '(') brackets++;
+                        if (str[i] == ')') brackets--;
+                        statement += str[i];
                     }
-                    if (checkGr(part)) Console.WriteLine("Success");
-                    else Console.WriteLine("Error: wrong or missing statement after THEN.");
-                }
-                else Console.WriteLine("Error: wrong bool expression.");
-            }
-            else {
-                Console.WriteLine("Error: some troubles with IF or THEN.");
-            }
 
+                    //check expression is correct
+                    if (checkExpr(statement) && brackets == 0) {
+                        string part = "";
+                        for (int i = posEnd + 4; i < str.Length; i++) {
+                            if (str[i] != ';') part += str[i];
+                            else i = str.Length;
+                        }
+                        if (checkGr(part)) Console.WriteLine("Success");
+                        else Console.WriteLine("Error: wrong or missing statement after THEN.");
+                    }
+                    else Console.WriteLine("Error: wrong bool expression.");
+                }
+                else {
+                    Console.WriteLine("Error: some troubles with IF or THEN.");
+                }
+            }
             Console.ReadKey();
+        }
+
+
+        static bool fastAnalize(string str) {
+            int i = 0;
+            while( i<str.Length) {
+                if (Char.IsDigit(str[i]) || Char.IsLetter(str[i]) || dArray.Contains(str[i].ToString()) || keyArray.Contains(str[i].ToString())) i++;
+                else {
+                    Console.WriteLine("Can't recognize that symbol: " + str[i]);
+                    return false;
+                }
+            }
+            return true;
         }
 
         //find if and then. Return TRUE if all is ok in other case return FALSE
@@ -243,26 +281,7 @@ namespace prk2_var7
         //grammar for bool statement should be
         //<statement> := <part> </>/=/<>... <part>
         //here we get only <part> and check it's grammar 
-        //
-        //<part> := <id>|<const>|<assign> | <func>
-        //<id> := idd | idd.<id> | <func>.idd
 
-        //<assign> := <id> := <part>
-
-        //<func> := <id>(<arg>) | <id>(<arg>)
-        //<arg> := <argum> | <argum>,<arg>
-        //<argum> := <part>
-
-        //<const> := <strconst> | <numconst>
-
-        //<strconst> := '<str>'
-        //<str> := <str><letter> | <letter>
-        //<letter> := a..z | A..Z | 0..9 | space
-
-        //<numconst> := <number><operator><numconst> | <number>
-        //<operator> := +|-|*|/
-        //<number> := <number><digit> | <digit>
-        //<digit> := 0..9
 
 
         //universal way

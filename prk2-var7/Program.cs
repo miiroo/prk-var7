@@ -529,7 +529,8 @@ namespace prk2_var7
             bool isFunc = false;
             string word = "";
             for (int j=0; j<str.Length; j++) {
-                if(str[j] != '.') {
+                if (keyArray.Contains(str[j].ToString())) return false;
+                if (str[j] != '.') {
                     if(isFirst) {
                         if (Char.IsDigit(str[j]))  return false;
                         isFirst = false;

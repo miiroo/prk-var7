@@ -158,6 +158,7 @@ namespace prk2_var7
                 if (word == "then" && !thenFounded) {
                     //symbol before THEN should be ) or space
                     //symbol after THEN should be space
+                    if (str.IndexOf("then") + 4 >= str.Length) return true;
                     if ((str[str.IndexOf("then") - 1] == ' ' || str[str.IndexOf("then") - 1] == ')') && str[str.IndexOf("then") + 4] == ' ') thenFounded = true;
                     else return false;
                 }
@@ -291,8 +292,11 @@ namespace prk2_var7
             if (str == "") return false; 
             int j = 0;
             //some cleaning from trash (, ) and spaces
-            while (j<str.Length && str[j] == ' ' || str[j] == '(')
-               str = str.Remove(j, 1);
+            while (j < str.Length) {
+                if (str[j] == ' ' || str[j] == '(')
+                    str = str.Remove(j, 1);
+                else j = str.Length;
+            }
 
             j = str.Length - 1;
             while (j > 0 && str[j] == ' ') {

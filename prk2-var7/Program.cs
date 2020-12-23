@@ -241,6 +241,10 @@ namespace prk2_var7
                 part = "";
                 while (j < str.Length && str[j] != '<' && str[j] != '>' && str[j] != '=') {
                     part += str[j];
+                    if (str[j] == ':' && str[j + 1] == '=') {
+                        j++;
+                        part += str[j];
+                    }
                     j++;
                 }
                 // we found delimetr and it's alone
@@ -515,6 +519,7 @@ namespace prk2_var7
             word = "";
             while (j<str.Length) {
                 word += str[j];
+                j++;
             }
             if (!checkGr(word)) return false;
 

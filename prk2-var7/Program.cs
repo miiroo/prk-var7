@@ -43,7 +43,7 @@ namespace prk2_var7
     * 
     * 
     * 
-    * Some useful grammar for that universal IF variant:
+    * Some useful grammar used for that IF:
     * 
     * <state> ::= if <exp> then <statement>
     * <statement> ::= <assign> | <func> 
@@ -56,18 +56,18 @@ namespace prk2_var7
     * 
     * <assign> ::= <id> := <part>
     * 
-    * <func> := <id>(<arg>) | <id>()
-    * <arg> := <argum> | <arg>,<argum>
-    * <argum> := <part>
+    * <func> ::= <id>(<arg>) | <id>()
+    * <arg> ::= <argum> | <arg>,<argum>
+    * <argum> ::= <part>
     * 
-    * <strconst> := '<str>'
-    * <str> := <str><letter> | <letter>
-    * <letter> := a..z | A..Z | 0..9 | space
+    * <strconst> ::= '<str>'
+    * <str> ::= <str><letter> | <letter>
+    * <letter> ::= a..z | A..Z | 0..9 | space
     * 
-    * <numconst> := <number><operator><numconst> | <number>
-    * <operator> := +|-|*|/
-    * <number> := <number><digit> | <digit>
-    * <digit> := 0..9
+    * <numconst> ::= <number><operator><numconst> | <number>
+    * <operator> ::= +|-|*|/
+    * <number> ::= <number><digit> | <digit>
+    * <digit> ::= 0..9
     * 
     * 
     */

@@ -10,6 +10,8 @@ using System.IO;
 namespace prk2_var7
 {
     /* 
+     * Program created by: https://github.com/miiroo
+     * 
     *  NOTE: Additional libs are used: System.IO 
     *  NOTE: You have to create a new project (Visual C# -> Console app) 
     *          and repaste all in namespace brackets

@@ -125,7 +125,7 @@ namespace prk2_var7
         static bool fastAnalize(string str) {
             int i = 0;
             while( i<str.Length) {
-                if (Char.IsDigit(str[i]) || Char.IsLetter(str[i]) || dArray.Contains(str[i].ToString()) || keyArray.Contains(str[i].ToString())) i++;
+                if (Char.IsDigit(str[i]) || Char.IsLetter(str[i]) || dArray.Contains(str[i].ToString()) || keyArray.Contains(str[i].ToString()) || str[i] == ' ') i++;
                 else {
                     Console.WriteLine("Can't recognize that symbol: " + str[i]);
                     return false;

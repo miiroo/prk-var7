@@ -80,7 +80,8 @@ namespace prk2_var7
         private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "Begin",
             "if", "and", "then", "else", "while", "not", "do", "End", "=", "+", "<", ">", "*", "-", "/"};
         private static List<String> dArray = new List<String> { ".", ":", ";", "'", "(", ")", ":=", "," };
-
+        private static string errorMessage = "";
+        private static bool strongError = false;
         //if (CEdit1.Text='') and (Kedit2.Text='' and d=1) then ShowMessage('Please enter data');
         static void Main(string[] args) {
             string[] lines = File.ReadAllLines(@"code2.txt");
@@ -103,16 +104,28 @@ namespace prk2_var7
                     }
 
                     //check expression is correct
-                    if (checkExpr(statement) && brackets == 0) {
-                        string part = "";
-                        for (int i = posEnd + 4; i < str.Length; i++) {
-                            if (str[i] != ';') part += str[i];
-                            else i = str.Length;
+                    if (brackets == 0) {
+                        if (checkExpr(statement)) {
+                            string part = "";
+                            for (int i = posEnd + 4; i < str.Length; i++) {
+                                if (str[i] != ';') part += str[i];
+                                else i = str.Length;
+                            }
+                            if (checkGram(part)) Console.WriteLine("Success");
+                            else {
+                                Console.WriteLine("Error: wrong or missing statement after THEN.");
+                                Console.WriteLine(errorMessage);
+                            }
                         }
-                        if (checkGram(part)) Console.WriteLine("Success");
-                        else Console.WriteLine("Error: wrong or missing statement after THEN.");
+                        else {
+                         //   Console.WriteLine("Error: error in expression");
+                            Console.WriteLine(errorMessage);
+                        }
                     }
-                    else Console.WriteLine("Error: wrong bool expression.");
+                    else {
+                        if (brackets > 0) Console.WriteLine("Error: ) not found between IF and THEN (bool expression)");
+                        if (brackets < 0) Console.WriteLine("Error: ( not found between IF and THEN (bool expression)");
+                    }
                 }
                 else {
                     Console.WriteLine("Error: some troubles with IF or THEN.");
@@ -149,10 +162,16 @@ namespace prk2_var7
                 if (word == "if" && !ifFounded) {
                     //symbol after IF should be ( or space
                     if (str[i] == '(' || str[i] == ' ') ifFounded = true;
-                    else return false;
+                    else {
+                        Console.WriteLine("Error: IF not found.");
+                        return false;
+                    }
                 }
                 else {
-                    if (word == "if") return false;
+                    if (word == "if") {
+                        Console.WriteLine("Error: find IF but it's already exist.");
+                        return false;
+                    }
                 }
 
                 if (word == "then" && !thenFounded) {
@@ -160,14 +179,21 @@ namespace prk2_var7
                     //symbol after THEN should be space
                     if (str.IndexOf("then") + 4 >= str.Length) return true;
                     if ((str[str.IndexOf("then") - 1] == ' ' || str[str.IndexOf("then") - 1] == ')') && str[str.IndexOf("then") + 4] == ' ') thenFounded = true;
-                    else return false;
+                    else {
+                        Console.WriteLine("Error: THEN not found.");
+                        return false;
+                    }
                 }
                 else {
-                    if (word == "then") return false;
+                    if (word == "then") {
+                        Console.WriteLine("Error: THEN was found, but it's already exist");
+                        return false;
+                    }
                 }
 
             }
             if (ifFounded && thenFounded) return true;
+            Console.WriteLine("Error: IF and THEN not found.");
             return false;
         }
 
@@ -224,6 +250,7 @@ namespace prk2_var7
 
             //there were no OR/AND
             if (boolGramar(str)) return true;
+
             return false;
         }
 
@@ -272,11 +299,15 @@ namespace prk2_var7
                 //or it's end of string
                 else {
                     //we found delimetr
-                    if (j<str.Length && (str[j] == '<' || str[j] == '>' || str[j] == '=')) return false;
+                    if (j < str.Length && (str[j] == '<' || str[j] == '>' || str[j] == '=')) {
+                        Console.WriteLine("Error: Found "+str[j]+" but compare symbol already found.");
+                        return false;
+                    }
                     part2 = checkGr(part);
                 }
             }
             if (part1 && part2) return true;
+            Console.WriteLine("Error: in bool expression.");
             return false;
         }
 
@@ -292,7 +323,11 @@ namespace prk2_var7
 
         //universal way
         static bool checkGr(string str) {
-            if (str == "") return false; 
+            if (strongError) return false;
+            if (str == "") {
+                errorMessage = "Error: missing statement.";
+                return false;
+            } 
             int j = 0;
             //some cleaning from trash (, ) and spaces
             while (j < str.Length) {
@@ -314,7 +349,6 @@ namespace prk2_var7
                     if (str[i] == '(') countOpen++;
                     if (str[i] == ')' && countOpen <= 0) {
                         str = str.Remove(i, 1);
-                        i--;
                     }
                     if (str[i] == ')' && countOpen > 0) countOpen--;
                 }
@@ -322,21 +356,25 @@ namespace prk2_var7
             }
             //////////////end of cleaning////////////////////
 
+         
             //part is <numconst>
             if (checkNum(str)) return true;
             //part is <strconst>
             if (checkStr(str)) return true;
-            //part is <func>
-            if (checkFunc(str)) return true;
             //part is <assign>
             if (checkAssign(str)) return true;
+            //part is <func>
+            if (checkFunc(str)) return true;
             //part is <id>
             if (checkId(str)) return true;
             return false;
         }
 
         static bool checkGram(string str) {
-            if (str == "") return false;
+            if (str == "") {
+                Console.WriteLine("Error: missing statement.");
+                return false;
+            }
             int j = 0;
             //some cleaning from trash (, ) and spaces
             while (j < str.Length) {
@@ -366,11 +404,11 @@ namespace prk2_var7
             }
             //////////////end of cleaning////////////////////
 
-           
-            //part is <func>
-            if (checkFunc(str)) return true;
             //part is <assign>
             if (checkAssign(str)) return true;
+            //part is <func>
+            if (checkFunc(str)) return true;
+  
             return false;
         }
 
@@ -379,12 +417,20 @@ namespace prk2_var7
         //<number> := <number><digit> | <digit>
         //<digit> := 0..9
         static bool checkNum(string str) {
-            if (str == "") return false;
-
+            if (strongError) return false;
+            if (str == "") {
+                errorMessage = "Error: missing statement.";
+                return false;
+            }
             bool rowNum = false;
             bool rowOp = false;
             for (int i=0; i<str.Length; i++) {
-                if (Char.IsLetter(str[i])) return false;
+                if (Char.IsLetter(str[i])) {
+                    if (rowNum || rowOp)
+                        strongError = true;
+                    errorMessage = "Error: identifier/function can't start with DIGIT.";
+                    return false;
+                }
 
                 //it's digit
                 if (char.IsDigit(str[i])) {
@@ -395,7 +441,11 @@ namespace prk2_var7
                         while (i < str.Length && Char.IsDigit(str[i])) i++;
                         i--;
                     }
-                    else return false;
+                    else {
+                        strongError = true;
+                        errorMessage = "Error: NO OPERATOR between digits";
+                        return false;
+                    }
                 }
 
                 //it's operator
@@ -403,10 +453,18 @@ namespace prk2_var7
                     if (!rowNum) return false;
                     rowNum = false;
                     if (!rowOp) rowOp = true;
-                    else return false;
+                    else {
+                        strongError = true;
+                        errorMessage = "Error: OPERATOR was found but expected DIGIT";
+                        return false;
+                    }
                 }
             }
-            if (rowOp) return false;
+            if (rowOp) {
+                strongError = true;
+                errorMessage = "Error: OPERATOR was found but expected DIGIT";
+                return false;
+            }
             return true;
         }
 
@@ -414,21 +472,35 @@ namespace prk2_var7
         //<str> := <str><letter> | <letter>
         //<letter> := a..z | A..Z | 0..9 | space
         static bool checkStr(string str) {
-            if (str == "") return false;
-
+            if (strongError) return false;
+            if (str == "") {
+               errorMessage = "Error: missing statement.";
+                return false;
+            }
             bool findOne = false;
             bool findSecond = false;
              
             for (int i=0; i<str.Length; i++) {
                 if (str[i] != ' ' || str[i].ToString() !="'") {
-                    if (!findOne) return false;
-                    if (findOne && findSecond) return false;
+                    if (!findOne) {
+                        errorMessage = "Error: ' expected but not found.";
+                        return false;
+                    }
+                    if (findOne && findSecond) {
+                        if (strongError) return false;
+                        errorMessage = "Error: string const already founded.";
+                        return false;
+                    }
                 }
                if (str[i].ToString() == "'") {
                     if (!findOne) findOne = true;
                     else {
                         if (!findSecond) findSecond = true;
-                        else return false;
+                        else {
+                            if (strongError) return false;
+                            errorMessage = "Error: ' expected but not found";
+                            return false;
+                        }
                     }
                }
             }
@@ -439,10 +511,17 @@ namespace prk2_var7
         //<arg> := <argum> | <arg>,<argum>
         //<argum> := <part>
         static bool checkFunc(string str) {
-            if (str == "") return false;
-
+            if (strongError) return false;
+            if (str == "") {
+                errorMessage = "Error: missing statement.";
+                return false;
+            }
             //check func name is correct function name
-            if (Char.IsDigit(str[0])) return false;
+            if (Char.IsDigit(str[0])) {
+                if (strongError) return false;
+                errorMessage = "Error: function/identifier can't start with DIGIT";
+                return false;
+            }
             int j = 0;
             string argum = "";
             //find func (
@@ -467,7 +546,11 @@ namespace prk2_var7
                         else {
                             haveWord = true;
                             if (countOpen != 0) {
-                                if (space) return false;
+                                if (space) {
+                                    if (strongError) return false;
+                                    errorMessage = "Error: , missing in function arguments";
+                                    return false;
+                                }
                             }
                         }
                         if (countOpen != 0) {
@@ -479,14 +562,21 @@ namespace prk2_var7
                     if (countOpen == 0) getArg = true;
 
                     if (notALone) {
-                        if (!checkGr(argum)) return false;
+                        if (!checkGr(argum)) {
+                            errorMessage += "\nError: in function arguments.";
+                            return false;
+                        }
                     }
                     else {
                         bool onlySpaces = true;
                         for (int i = 0; i < argum.Length; i++)
                             if (argum[i] != ' ') onlySpaces = false;
                         if (!onlySpaces)
-                            if (!checkGr(argum)) return false;
+                            if (!checkGr(argum)) {
+                                errorMessage += "\nError: in function arguments.";
+                                return false;
+                            }
+
                     }
 
                     haveWord = false;
@@ -495,61 +585,112 @@ namespace prk2_var7
                 j++;
             }
             if (j < str.Length) {
-                for (int i = j; i< str.Length; i++)
-                    if (str[i] != ' ') return false;
+                for (int i = j; i < str.Length; i++)
+                    if (str[i] != ' ') {
+                        if (strongError) return false;
+                        errorMessage = "Error: expected ; after )";
+                        return false;
+                    }
             }
-            if (getConst) return false;
-            if (!getArg) return false;
+            if (getConst) {
+                if (strongError) return false;
+                errorMessage = "Error: ' not found in function argument.";
+                return false;
+            }
+            if (!getArg) {
+                if (strongError) return false;
+                errorMessage = "Error: ) not found";
+                return false;
+            }
             return true;
         }
 
         //<assign> := <id> := <part>
         static bool checkAssign(string str) {
-            if (str == "") return false;
+            if (strongError) return false;
+            if (Char.IsDigit(str[0])) {
+                if (strongError) return false;
+                errorMessage = "Error: identifier/function can't start with DIGIT";
+                return false;
+            }
             string word = "";
             int j = 0;
             while (j<str.Length && str[j] != ':') {
                 word += str[j];
                 j++;
             }
-            if (j >= str.Length) return false;
-            if (!checkId(word)) return false;
-            if (str[j + 1] != '=') return false;
+            if (j >= str.Length) {
+                errorMessage = "Error: := not found";
+                return false;
+            }
+            if (!checkId(word)) {
+                errorMessage += "\nError: in assignment.";
+                return false;
+            }
+            if (str[j + 1] != '=') {
+                if (strongError) return false;
+                strongError = true;
+                errorMessage = "Error: = expected but not found.";
+                return false;
+            }
             j += 2;
             word = "";
             while (j<str.Length) {
                 word += str[j];
                 j++;
             }
-            if (!checkGr(word)) return false;
+            if (!checkGr(word)) {
+                errorMessage += "\nError: in assignment.";
+                return false;
+            }
 
             return true;
         }
 
         //<id> := idd | <id>.idd | <func>.idd
         static bool checkId(string str) {
-            if (str == "") return false;
+            if (strongError) return false;
+            if (str == "") {
+                errorMessage = "Error: missing statement.";
+                return false;
+            }
+
             bool isFirst = true;
 
             bool isFunc = false;
             string word = "";
             for (int j=0; j<str.Length; j++) {
-                if (keyArray.Contains(str[j].ToString())) return false;
+                if (keyArray.Contains(str[j].ToString())) {
+                    strongError = true;
+                    errorMessage = "Error: identifier/function can't consider current symbol: " + str[j];
+                    return false;
+                }
+
+
                 if (str[j] != '.') {
                     if(isFirst) {
-                        if (Char.IsDigit(str[j]))  return false;
+                        if (Char.IsDigit(str[j])) {
+                            strongError = true;
+                            errorMessage = "Error: identifier/function can't start witn digit.";
+                            return false;
+                        }
                         isFirst = false;
                     }
                     if (str[j] == '(') isFunc = true;
                     word += str[j];
                 } else {
                     isFunc = false;
-                    if (!checkGr(word)) return false;
+                    if (!checkGr(word)) {
+                        errorMessage += "\nError: in identifier.";
+                        return false;
+                    }
                     word = "";
                     isFirst = true;
                 }
             }
-            if (isFunc) return false;
+            if (isFunc) {
+                return false;
+            }
 
             return true;
         }

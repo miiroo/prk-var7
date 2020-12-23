@@ -1,1 +1,1 @@
-if 2<data then ShowMessage();
+if ()str < data() then Show.Message();

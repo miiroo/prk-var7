@@ -46,30 +46,34 @@ namespace prk2_var7
     * 
     * 
     * Some useful grammar used for that IF:
+    * NOTE: if you want to use that grammar for yourself, please, change some names.
     * 
-    * <state> ::= if <exp> then <statement>
-    * <statement> ::= <assign> | <func> 
-    * <exp> ::= <bool exp> |<exp> AND <exp> | <exp> OR <exp>
-    * <bool exp> ::= <part><compare symbol><part>
+    * if <bool st> then <state>
+    * <state> ::= <assign>|<func>|<id>  (it could be ID coz pascal got functions without () )
+    * <assign> ::= <id>:=<smth>
+    * 
+    * <bool state> ::= <expr><bool operand><bool state> | <expr>
+    * <bool operand> ::= AND | OR
+    * 
+    * <expr> ::= <smth><compare symbol><smth>
     * <compare symbol> ::= < | > | = | <= | >= | <>
-    * <part> ::=  <id>|<const>|<assign>|<func>
     * 
-    * <id> ::= idd | <id>.idd | <func>.idd     (note: idd - it's a grammar from previous work (lab 1))
     * 
-    * <assign> ::= <id> := <part>
+    * <part> ::= <T> | <T>+<part>| <T>-<part>
+    * <T> ::= <F> | <F>*<F> | <F>/<F>
+    * <F> ::= <id> | <func> | <number> | (<part>)
     * 
-    * <func> ::= <id>(<arg>) | <id>()
-    * <arg> ::= <argum> | <arg>,<argum>
-    * <argum> ::= <part>
+    * <number> ::= digit<number>|digit
+    * <strconst> ::= '<symbols>'
+    * <symbols> ::= all possible symbols
     * 
-    * <strconst> ::= '<str>'
-    * <str> ::= <str><letter> | <letter>
-    * <letter> ::= a..z | A..Z | 0..9 | space
+    * <func> ::= <id>(<param>) | <id>()
+    * <param> ::= <smth>,<param> | <smth>
     * 
-    * <numconst> ::= <number><operator><numconst> | <number>
-    * <operator> ::= +|-|*|/
-    * <number> ::= <number><digit> | <digit>
-    * <digit> ::= 0..9
+    * <id> ::= <id>.idd | idd    (idd - it's identifier from previous lab)
+    * 
+    * 
+    * <smth> ::= <part> | <strconst>
     * 
     * 
     */

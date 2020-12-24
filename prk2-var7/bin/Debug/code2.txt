@@ -1,1 +1,1 @@
-if ()str < data() then Show.Message();
+if str < (l+2) and (k*1) then Show.Message();

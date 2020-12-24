@@ -1,0 +1,1 @@
+﻿for i:=2 to 1+2+3 do P:=New('PButton', 'cmCalcButton');

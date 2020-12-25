@@ -57,7 +57,7 @@ namespace prk2_var7
     * 
     * <expr> ::= <smth><compare symbol><smth>
     * <compare symbol> ::= < | > | = | <= | >= | <>
-    * 
+    * <smth> ::= <part> | <strconst>
     * 
     * <part> ::= <T> | <T>+<part>| <T>-<part>
     * <T> ::= <F> | <F>*<F> | <F>/<F>
@@ -73,7 +73,6 @@ namespace prk2_var7
     * <id> ::= <id>.idd | idd    (idd - it's identifier from previous lab)
     * 
     * 
-    * <smth> ::= <part> | <strconst>
     * 
     * 
     */

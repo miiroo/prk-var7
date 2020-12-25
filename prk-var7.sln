@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prk2-var7", "prk2-var7\prk2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prk-for", "prk-for\prk-for.csproj", "{F6C3BA4A-FFA3-4615-982E-EE1F63C431DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prk-assign", "prk-assign\prk-assign.csproj", "{4D8982F5-2225-4E57-AD24-AA88971B0EF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F6C3BA4A-FFA3-4615-982E-EE1F63C431DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C3BA4A-FFA3-4615-982E-EE1F63C431DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C3BA4A-FFA3-4615-982E-EE1F63C431DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8982F5-2225-4E57-AD24-AA88971B0EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8982F5-2225-4E57-AD24-AA88971B0EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8982F5-2225-4E57-AD24-AA88971B0EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8982F5-2225-4E57-AD24-AA88971B0EF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

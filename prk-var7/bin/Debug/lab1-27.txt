@@ -1,14 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-
-namespace prk_var7
-{
-
  /*
  * Program created by: https://github.com/miiroo
  *  NOTE: Additional libs are used: System.IO 
@@ -350,4 +339,3 @@ namespace prk_var7
             }
         }
     }
-}

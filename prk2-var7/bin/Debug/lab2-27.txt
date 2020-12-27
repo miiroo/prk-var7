@@ -1,14 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-
-
-namespace prk2_var7
-{
     /* 
      * Program created by: https://github.com/miiroo
      * 
@@ -819,6 +808,3 @@ namespace prk2_var7
             }
             return true;
         }
-
-    }
-}

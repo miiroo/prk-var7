@@ -1,1 +1,1 @@
-if Target.a=1 then Dec('',P,'') else CharPtr := P+2
+if HasSelection and DelSelect then DeleteSelect else SetSelect(CurPtr+1+, EndPtr, True);

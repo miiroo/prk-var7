@@ -1,1 +1,1 @@
-I:= InsertText(@ReplaceStr[1], Length(RaplaceStr+1), False);
+I:= InsertText(@ReplaceStr[1],, Length(RaplaceStr+1), False);

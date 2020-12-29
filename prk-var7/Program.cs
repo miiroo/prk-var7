@@ -53,8 +53,8 @@ namespace prk_var7
     class Program
     {
 
-        private static List<String> keyArray = new List<String> {"function", "program",  "var", "integer", "BEGIN", "begin",
-            "if", "and", "then", "else", "while", "not", "do", "END", "=", "+", "<", ">", "*", "-"};
+        private static List<String> keyArray = new List<String> {"function", "program",  "var", "integer", "begin",
+            "if", "and", "then", "else", "while", "not", "do", "end","writeln", "write", "readln", "for", "to", "=", "+", "<", ">", "*", "-"};
         private static List<String> dArray = new List<String> {".", ":", ";", "'", "(", ")", ":=", ",", "#" };
         private static List<String> idArray = new List<String>();
         private static List<String> cnstArray = new List<String>();
@@ -220,7 +220,7 @@ namespace prk_var7
         //return TRUE if word was founded is a key word 
         //in other case return FALSE 
         private static bool checkKeyWord(string word) {
-            if (keyArray.Contains(word)) return true;
+            if (keyArray.Contains(word.ToLower())) return true;
             return false;
         }
 
@@ -228,7 +228,7 @@ namespace prk_var7
         //return TRUE if word was founded is an existed id 
         //in other case return FALSE
         private static bool checkId(string word) {
-            if (idArray.Contains(word)) return true;
+            if (idArray.Contains(word.ToLower())) return true;
             return false;
         }
 
@@ -327,7 +327,7 @@ namespace prk_var7
                         System.Console.WriteLine();
                         i++;
                     }
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                  //  for (int j = 0; j < 50; j++) System.Console.Write("#");
                     System.Console.WriteLine();
                     System.Console.WriteLine();
                     break;

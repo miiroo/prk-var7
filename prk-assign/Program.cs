@@ -46,7 +46,7 @@ namespace prk_assign
     class Program
     {
 
-        private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "Begin",
+        private static List<String> keyArray = new List<String> { "procedure", "TObject", "var", "integer", "begin",
             "if", "and", "then", "else", "while", "not", "do", "End", "to", "=", "+", "<", ">", "*", "-", "/"};
         private static List<String> dArray = new List<String> { ".", ":", ";", "'", "(", ")", ":=", ",", "@", "[", "]" };
         static string errorMessage = "";
@@ -433,7 +433,7 @@ namespace prk_assign
                 if (str[j] == ',' && !isConst) {
                     isArg = true;
                     word = cleaning(word);
-                    if (word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") word = "";
+                    if (word != "" && word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") word = "";
                     else {
                         if (!checkPart(word)) {
                             //   errorMessage += "\nError: in " + str; //optional

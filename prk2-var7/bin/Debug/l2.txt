@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-
-
-namespace prk2_var7
-{
-    /* 
+ /* 
      * Program created by: https://github.com/miiroo
      * 
     *  NOTE: Additional libs are used: System.IO 
@@ -163,27 +152,27 @@ namespace prk2_var7
                                         }
                                     }
                                     else {
-                                        Console.WriteLine("<Error> :  missing ( or )");
+                                        Console.WriteLine("ERROR. Message:  missing ( or )");
                                     }
                                 }
 
                                 else {
-                                   Console.WriteLine( "<Error> :   wrong or missing statement after THEN.");
+                                   Console.WriteLine( "ERROR. Message:   wrong or missing statement after THEN.");
                                    Console.WriteLine(errorMessage);
                                 }
                             }
                             else {
                                Console.WriteLine(errorMessage);
-                               Console.WriteLine("\n<Error> : error in bool expression");
+                               Console.WriteLine("\nERROR. Message: error in bool expression");
                             }
                         }
                         else {
-                            if (brackets > 0)Console.WriteLine("<Error> :   ) not found between IF and THEN (in bool expression)");
-                            if (brackets < 0)Console.WriteLine("<Error> :   ( not found between IF and THEN (in bool expression)");
+                            if (brackets > 0)Console.WriteLine("ERROR. Message:   ) not found between IF and THEN (in bool expression)");
+                            if (brackets < 0)Console.WriteLine("ERROR. Message:   ( not found between IF and THEN (in bool expression)");
                         }
                     }
                     else {
-                       Console.WriteLine("\n<Error> :   some troubles with IF or THEN.");
+                       Console.WriteLine("\nERROR. Message:   some troubles with IF or THEN.");
                     }
                 }
             }
@@ -315,13 +304,13 @@ namespace prk2_var7
                     //symbol after IF should be ( or space
                     if (str[i] == '(' || str[i] == ' ') ifFounded = true;
                     else {
-                       Console.WriteLine("<Error> :   IF not found.");
+                       Console.WriteLine("ERROR. Message:   IF not found.");
                         return false;
                     }
                 }
                 else {
                     if (word == "if") {
-                       Console.WriteLine("<Error> :   find IF but it's already exist.");
+                       Console.WriteLine("ERROR. Message:   find IF but it's already exist.");
                         return false;
                     }
                 }
@@ -332,21 +321,21 @@ namespace prk2_var7
                     if (str.IndexOf("then") + 4 <= str.Length) {
                         if ((str[str.IndexOf("then") - 1] == ' ' || str[str.IndexOf("then") - 1] == ')') && str[str.IndexOf("then") + 4] == ' ') thenFounded = true;
                         else {
-                           Console.WriteLine("<Error> :   THEN not found.");
+                           Console.WriteLine("ERROR. Message:   THEN not found.");
                             return false;
                         }
                     }
                 }
                 else {
                     if (word == "then") {
-                       Console.WriteLine("<Error> :   THEN was found, but it's already exist");
+                       Console.WriteLine("ERROR. Message:   THEN was found, but it's already exist");
                         return false;
                     }
                 }
 
             }
             if (ifFounded && thenFounded) return true;
-           Console.WriteLine( "<Error> :   IF and THEN not found.");
+           Console.WriteLine( "ERROR. Message:   IF and THEN not found.");
             return false;
         }
 
@@ -395,7 +384,7 @@ namespace prk2_var7
                             word1 = "";
                             foundAndOr = true;
                             if (!checkExpr(word2)) {
-                            //    errorMessage += "\n<Error> :  in " + str; //optional
+                            //    errorMessage += "\nERROR. Message:  in " + str; //optional
                                 return false;
                             }
                             word2 = "";
@@ -415,13 +404,13 @@ namespace prk2_var7
             word2 += word1;
             if (!foundAndOr) {
                 if (!checkExpr(word2)) {
-                 //   errorMessage += "\n<Error> :  in " + str; //optional
+                 //   errorMessage += "\nERROR. Message:  in " + str; //optional
                     return false;
                 }
             }
             else {
                 if (!checkBoolSt(word1)) {
-                //    errorMessage += "\n<Error> :  in " + str; //optional
+                //    errorMessage += "\nERROR. Message:  in " + str; //optional
                     return false;
                 }
             }
@@ -443,7 +432,7 @@ namespace prk2_var7
                     else {
                         if (findCompare) {
                             strongError = true;
-                            errorMessage = "\n<Error> :  compare symbol already founded";
+                            errorMessage = "\nERROR. Message:  compare symbol already founded";
                             return false;
                         }
 
@@ -452,12 +441,12 @@ namespace prk2_var7
                                 findCompare = true;
                                 if (i + 1 >= str.Length) {
                                     strongError = true;
-                                    errorMessage += "\n<Error> :  missing expression in " + str;
+                                    errorMessage += "\nERROR. Message:  missing expression in " + str;
                                     return false;
                                 }
                                 if (str[i + 1] == '=' || str[i + 1] == '>') i++;
                                 if (!checkSmth(word)) {
-                                //    errorMessage += "\n<Error> :  in " + str; //optional
+                                //    errorMessage += "\nERROR. Message:  in " + str; //optional
                                     return false;
                                 }
 
@@ -466,12 +455,12 @@ namespace prk2_var7
                                 findCompare = true;
                                 if (i + 1 >= str.Length) {
                                     strongError = true;
-                                    errorMessage += "\n<Error> :  missing expression in " + str;
+                                    errorMessage += "\nERROR. Message:  missing expression in " + str;
                                     return false;
                                 }
                                 if (str[i + 1] == '=') i++;
                                 if (!checkSmth(word)) {
-                                  //  errorMessage += "\n<Error> :  in " + str; //optional
+                                  //  errorMessage += "\nERROR. Message:  in " + str; //optional
                                     return false;
                                 }
                                 break;
@@ -479,11 +468,11 @@ namespace prk2_var7
                                 findCompare = true;
                                 if (i + 1 >= str.Length) {
                                     strongError = true;
-                                    errorMessage += "\n<Error> :  missing expression in " + str;
+                                    errorMessage += "\nERROR. Message:  missing expression in " + str;
                                     return false;
                                 }
                                 if (!checkSmth(word)) {
-                                 //   errorMessage += "\n<Error> :  in " + str; //optional
+                                 //   errorMessage += "\nERROR. Message:  in " + str; //optional
                                     return false;
                                 }
                                 break;
@@ -498,11 +487,11 @@ namespace prk2_var7
             }
             if (!findCompare) {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing boolean expression in " + str;
+                errorMessage += "\nERROR. Message:  missing boolean expression in " + str;
                 return false;
             }
             if (!checkSmth(word)) {
-                //   errorMessage += "\n<Error> :  in " + str; //optional
+                //   errorMessage += "\nERROR. Message:  in " + str; //optional
                 return false;
             }
             return true;
@@ -513,13 +502,13 @@ namespace prk2_var7
             if (strongError) return false;
             str = cleaning(str);
             if (str == "") {
-                errorMessage += "\n<Error> :  missing expression.";
+                errorMessage += "\nERROR. Message:  missing expression.";
                 return false;
             }
             if (str[0].ToString() == "'" && str[str.Length - 1].ToString() == "'") return true;
             else {
                 if (!checkPart(str)) {
-              //      errorMessage += "\n<Error> :  in " + str; //optional
+              //      errorMessage += "\nERROR. Message:  in " + str; //optional
                     return false;
                 }
             }
@@ -533,7 +522,7 @@ namespace prk2_var7
             str = cleaning(str);
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
 
@@ -558,7 +547,7 @@ namespace prk2_var7
                 j++;
             }
             if (!checkT(word)) {
-                // errorMessage += "\n<Error> :  in " + str; //optional
+                // errorMessage += "\nERROR. Message:  in " + str; //optional
                 return false;
             }
             return true;
@@ -570,7 +559,7 @@ namespace prk2_var7
             str = cleaning(str);
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
             string word = "";
@@ -594,7 +583,7 @@ namespace prk2_var7
                 j++;
             }
             if (!checkF(word)) {
-                // errorMessage += "\n<Error> :  in " + str;
+                // errorMessage += "\nERROR. Message:  in " + str;
                 return false;
             }
             return true;
@@ -605,7 +594,7 @@ namespace prk2_var7
             if (strongError) return false;
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
             if (str[0] == '(' && str[str.Length-1] == ')') return checkPart(str);
@@ -620,7 +609,7 @@ namespace prk2_var7
             if (strongError) return false;
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
             bool numRow = false;
@@ -630,7 +619,7 @@ namespace prk2_var7
                     getNumb = true;
                     if (numRow) {
                         strongError = true;
-                        errorMessage = "<Error> :  expected OPERATOR but " + str[i] + " was found";
+                        errorMessage = "ERROR. Message:  expected OPERATOR but " + str[i] + " was found";
                         return false;
                     }
                 }
@@ -640,7 +629,7 @@ namespace prk2_var7
                 if (Char.IsLetter(str[i]) || dArray.Contains(str[i].ToString())) {
                     if (numRow) {
                         strongError = true;
-                        errorMessage = "<Error> :  expected OPERATOR but " + str[i] + " was found";
+                        errorMessage = "ERROR. Message:  expected OPERATOR but " + str[i] + " was found";
                         return false;
                     }
                     else return false;
@@ -648,7 +637,7 @@ namespace prk2_var7
             }
             if (getNumb) return true;
             strongError = true;
-            errorMessage = "<Error> :  missing statement";
+            errorMessage = "ERROR. Message:  missing statement";
             return false;
         }
 
@@ -657,53 +646,41 @@ namespace prk2_var7
             if (strongError) return false;
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
             //string word = "";
             bool isWord = false;
-            string word = "";
             for (int i = 0; i < str.Length; i++) {
                 if (Char.IsDigit(str[i]) && !isWord) {
                     strongError = true;
-                    errorMessage += "\n<Error> :  identifier/function can't start with digit in " + str;
+                    errorMessage += "\nERROR. Message:  identifier/function can't start with digit in " + str;
                     return false;
                 }
                 if (Char.IsLetter(str[i])) {
                     isWord = true;
-                    word += str[i];
                 }
-                if (str[i] == '.') {
-                    isWord = false;
-                    if (word == "") {
-                        strongError = true;
-                        errorMessage += "\n<Error> : No identifier before . in" + str;
-                        return false;
-                    }
-                    word = "";
-                }
+                if (str[i] == '.') isWord = false;
                 if (str[i] == '(') return false;
                 if (dArray.Contains(str[i].ToString()) && str[i] != '(' && str[i] != '.') {
                     strongError = true;
-                    errorMessage += "\n<Error> :  identifier/function can't consider current symbol " + str[i] + " in " + str;
+                    errorMessage += "\nERROR. Message:  identifier/function can't consider current symbol " + str[i] + " in " + str;
                     return false;
                 }
                 if (str[i] == ' ') {
                     strongError = true;
-                    errorMessage += "\n<Error> :  expected ; in " + str;
+                    errorMessage += "\nERROR. Message:  expected ; in " + str;
                     return false;
                 }
             }
             return true;
         }
 
-
-
         static bool checkFunc(string str) {
             if (strongError) return false;
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
 
@@ -715,39 +692,25 @@ namespace prk2_var7
                 j++;
             }
             if (!checkId(word)) {
-                //       errorMessage += "\n<Error> :  in " + str; //optional
+                //       errorMessage += "\nERROR. Message:  in " + str; //optional
                 return false;
             }
             bool isArg = false;
-            bool wasConst = false;
             j++;
             word = "";
             int brackets = 1;
             while (j < str.Length && brackets != 0) {
                 if (str[j] == '(' && !isConst) brackets++;
                 if (str[j] == ')' && !isConst) brackets--;
-                if (str[j].ToString() == "'") {
-                    if (isConst) wasConst = true;
-                    isConst = !isConst;
-                }
-
-                if (brackets != 0 && str[j] != ',' && !isConst && str[j].ToString() != "'") {
-                    if (wasConst) {
-                        strongError = true;
-                        errorMessage += "\n<Error> : missing , in atributes";
-                        return false;
-                    }
-                    word += str[j];
-                }
-
+                if (str[j].ToString() == "'") isConst = !isConst;
+                if (brackets != 0 && str[j] != ',' && !isConst) word += str[j];
                 if (str[j] == ',' && !isConst) {
-                    wasConst = false;
                     isArg = true;
                     word = cleaning(word);
                     if (word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") word = "";
                     else {
                         if (!checkPart(word)) {
-                            //   errorMessage += "\n<Error> :  in " + str; //optional
+                            //   errorMessage += "\nERROR. Message:  in " + str; //optional
                             return false;
                         }
                         word = "";
@@ -758,19 +721,19 @@ namespace prk2_var7
             }
             if (brackets != 0) {
                 strongError = true;
-                errorMessage = "\n<Error> :  missing ) in " + str;
+                errorMessage = "\nERROR. Message:  missing ) in " + str;
                 return false;
             }
             if (isArg) {
                 word = cleaning(word);
                 if (word == "") {
                     strongError = true;
-                    errorMessage += "\n<Error> :  missing argument in " + str;
+                    errorMessage += "\nERROR. Message:  missing argument in " + str;
                     return false;
                 }
                 if (word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") return true;
                 if (!checkPart(word)) {
-                    //   errorMessage += "\n<Error> :  in " + str; //optional
+                    //   errorMessage += "\nERROR. Message:  in " + str; //optional
                     return false;
                 }
             }
@@ -778,7 +741,7 @@ namespace prk2_var7
                 for (int i = j; i < str.Length; i++) {
                     if (str[i] != ' ' || str[i] != ')') {
                         strongError = true;
-                        errorMessage += "\n<Error> :  expected ; in " + str;
+                        errorMessage += "\nERROR. Message:  expected ; in " + str;
                         return false;
                     }
                 }
@@ -792,7 +755,7 @@ namespace prk2_var7
             if (strongError) return false;
             if (str == "") {
                 strongError = true;
-                errorMessage += "\n<Error> :  missing statement";
+                errorMessage += "\nERROR. Message:  missing statement";
                 return false;
             }
             str = cleaning(str);
@@ -801,7 +764,7 @@ namespace prk2_var7
             if (checkFunc(str)) { return true; }
 
             strongError = true;
-            errorMessage += "\n<Error> :  incorrect statement after then: " + str;
+            errorMessage += "\nERROR. Message:  incorrect statement after then: " + str;
             return false;
         }
 
@@ -818,13 +781,13 @@ namespace prk2_var7
             else {
                 if (str[j + 1] != '=') {
                     strongError = true;
-                    errorMessage = "\n<Error> :  expected := but found " + str[j + 1] + " in " + str;
+                    errorMessage = "\nERROR. Message:  expected := but found " + str[j + 1] + " in " + str;
                     return false;
                 }
                 word = cleaning(word);
                 if (!checkId(word)) {
                     strongError = true;
-                    errorMessage = "\n<Error> :  you can assign only to identifier but there is " + word + " in " + str;
+                    errorMessage = "\nERROR. Message:  you can assign only to identifier but there is " + word + " in " + str;
                     return false;
                 }
                 word = "";
@@ -834,13 +797,13 @@ namespace prk2_var7
                 word = cleaning(word);
                 if (word[0].ToString() == "'" && word.Length == 1) {
                     strongError = true;
-                    errorMessage += "\n<Error> :  missing ' in " + word;
+                    errorMessage += "\nERROR. Message:  missing ' in " + word;
                     return false;
                 }
                 if (word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") return true;
 
                 if (!checkPart(word)) {
-                    errorMessage += "\n<Error> :  in " + str;
+                    errorMessage += "\nERROR. Message:  in " + str;
                     return false;
                 }
             }
@@ -848,4 +811,3 @@ namespace prk2_var7
         }
 
     }
-}

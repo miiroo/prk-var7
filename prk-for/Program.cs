@@ -531,7 +531,7 @@ namespace prk_for
                 if (str[j] == ',' && !isConst) {
                     isArg = true;
                     word = cleaning(word);
-                    if (word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") word = "";
+                    if (word != "" && word[0].ToString() == "'" && word[word.Length - 1].ToString() == "'") word = "";
                     else {
                         if (!checkPart(word)) {
                             //   errorMessage += "\nError: in " + str; //optional

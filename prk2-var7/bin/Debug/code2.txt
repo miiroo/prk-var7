@@ -1,1 +1,1 @@
-if HasSelection and DelSelect then DeleteSelect else SetSelect(CurPtr+1+, EndPtr, True);
+if TPoint.Y <= T.Y then R.Move(0,Desktop.Size.Y);

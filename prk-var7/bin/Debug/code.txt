@@ -1,8 +1,14 @@
- program factorial; var i,k: integer;
-        function fact (n:integer):integer; 
-        begin
-            if n<=1 then fact:=1 else fact:=n*fact(n-1);
-        end;
-        BEGIN
-            write ('ввoдcимвoлai'):readln(i); for k:=1 to i do writeln(fact(k));
-        END.
+function StdEditorDialog(Dialog: Integer; Info: Pointer): Word;
+var R: TRect; T: TPoint;
+Begin
+ case Dialog of
+ edReplace: StdEditorDialog :=
+Application^.ExecuteDialog(CreateReplaceDialog,Info);
+ edReplacePrompt:
+    Begin
+        R.Assign(0, 1, 40, 8);
+        if TPoint.Y <= T.Y then R.Move(0, Desktop.Size.Y);
+        StdEditorDialog := MessageBoxRect(R, 'Replace this occurence?',nil,
+        mfYesNoCancel + mfInformation);
+    End;
+End;

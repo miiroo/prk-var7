@@ -1,0 +1,5 @@
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-var7\bin\Release\prk-var7.exe.config
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-var7\bin\Release\prk-var7.exe
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-var7\bin\Release\prk-var7.pdb
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-var7\obj\Release\prk-var7.exe
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-var7\obj\Release\prk-var7.pdb

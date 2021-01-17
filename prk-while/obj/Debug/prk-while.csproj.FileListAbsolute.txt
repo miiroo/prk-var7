@@ -1,0 +1,6 @@
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-while\bin\Debug\prk-while.exe.config
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-while\bin\Debug\prk-while.exe
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-while\bin\Debug\prk-while.pdb
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-while\obj\Debug\prk-while.exe
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-while\obj\Debug\prk-while.pdb
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-while\obj\Debug\prk-while.csprojResolveAssemblyReference.cache

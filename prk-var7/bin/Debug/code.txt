@@ -1,14 +1,12 @@
-function StdEditorDialog(Dialog: Integer; Info: Pointer): Word;
-var R: TRect; T: TPoint;
+procedure TForm1.Button3Click(SEnder: TObject);
+var i:extEnded;R:rec;kol:integer;
 Begin
- case Dialog of
- edReplace: StdEditorDialog :=
-Application^.ExecuteDialog(CreateReplaceDialog,Info);
- edReplacePrompt:
-    Begin
-        R.Assign(0, 1, 40, 8);
-        if TPoint.Y <= T.Y then R.Move(0, Desktop.Size.Y);
-        StdEditorDialog := MessageBoxRect(R, 'Replace this occurence?',nil,
-        mfYesNoCancel + mfInformation);
-    End;
+if (CEdit1.Text='') and (Kedit2.Text='') then ShowMessage('Please enter data');
+else Reset(F);
+i:=StrTofloat(CEdit1.Text);kol:=0;
+while not EoF(F) do
+ Begin
+ Read(F,R); if R.Price<i then kol:=kol+1;
+ End;
+ KEdit2.Text:=IntToStr(kol)
 End;

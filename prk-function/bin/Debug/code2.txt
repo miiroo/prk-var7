@@ -1,0 +1,1 @@
+FormatLine(B, LinePtr, Delta.X+Size.x, color);

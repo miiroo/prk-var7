@@ -53,8 +53,8 @@ namespace prk_var7
     class Program
     {
 
-        private static List<String> keyArray = new List<String> {"function", "program",  "var", "integer", "begin", "of", "nil", "pointer",
-            "if", "and", "then", "else", "while", "not", "do", "end", "writeln", "write", "readln", "for", "to", "=", "+", "<", ">", "*", "-"};
+        private static List<String> keyArray = new List<String> {"tobject", "function", "program",  "var", "integer", "begin", "of", "nil", "pointer",
+            "if", "and", "then", "else", "while", "not", "do", "end", "writeln", "write","read", "readln", "for", "to", "=", "+", "<", ">", "*", "-"};
         private static List<String> dArray = new List<String> {".", ":", ";", "'", "(", ")", ":=", ",", "#", "^" };
         private static List<String> idArray = new List<String>();
         private static List<String> cnstArray = new List<String>();
@@ -242,10 +242,10 @@ namespace prk_var7
 
         //adding log line based on where this word is saved
         private static void addLog(string word) {
-            if (checkConst(word)) { logLine.Add(/*logLine.Count + ": " +*/ word + " in CONST:" + cnstArray.IndexOf(word)); }
-            if (checkId(word)) { logLine.Add(/*logLine.Count + ": " +*/word + " in ID:" + idArray.IndexOf(word)); }
-            if (checkKeyWord(word)) { logLine.Add(/*logLine.Count + ": " +*/word + " in KEYS:" + keyArray.IndexOf(word.ToLower())); }
-            if (dArray.Contains(word)) { logLine.Add(/*logLine.Count + ": " +*/ word + " in DELIM:" + dArray.IndexOf(word)); }
+            if (checkConst(word)) { logLine.Add(/*logLine.Count + ": " +*/ word + "   =CONST(" + cnstArray.IndexOf(word)+")"); }
+            if (checkId(word)) { logLine.Add(/*logLine.Count + ": " +*/word + "   =ID(" + idArray.IndexOf(word)+")"); }
+            if (checkKeyWord(word)) { logLine.Add(/*logLine.Count + ": " +*/word + "   =KEYS(" + keyArray.IndexOf(word.ToLower())+")"); }
+            if (dArray.Contains(word)) { logLine.Add(/*logLine.Count + ": " +*/ word + "   =DELIM(" + dArray.IndexOf(word)+")"); }
         }
 
 
@@ -255,10 +255,10 @@ namespace prk_var7
             switch (word) {
                 case "key":
                     System.Console.WriteLine("KEY WORDS");
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("_");
                     System.Console.WriteLine();
                     foreach (string line in keyArray) {
-                        System.Console.Write(">  ");
+                        System.Console.Write("-  ");
                  //       System.Console.Write(i + ":");
                         System.Console.Write(line);
                         for (int j = line.Length; j < 46; j++) {
@@ -268,17 +268,17 @@ namespace prk_var7
                         System.Console.WriteLine();
                         i++;
                     }
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("-");
                     System.Console.WriteLine();
                     System.Console.WriteLine();
                     break;
 
                 case "d":
                     System.Console.WriteLine("DELIMETERS");
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("_");
                     System.Console.WriteLine();
                     foreach (string line in dArray) {
-                        System.Console.Write(">  ");
+                        System.Console.Write("-  ");
                 //        System.Console.Write(i+":");
                         System.Console.Write(line);
                         for (int j = line.Length; j < 46; j++) {
@@ -288,17 +288,17 @@ namespace prk_var7
                         System.Console.WriteLine();
                         i++;
                     }
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("-");
                     System.Console.WriteLine();
                     System.Console.WriteLine();
                     break;
 
                 case "id":
                     System.Console.WriteLine("ID");
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("_");
                     System.Console.WriteLine();
                     foreach (string line in idArray) {
-                        System.Console.Write(">  ");
+                        System.Console.Write("-  ");
                     //    System.Console.Write(i + ":");
                         System.Console.Write(line);
                         for (int j = line.Length; j < 46; j++) {
@@ -308,16 +308,16 @@ namespace prk_var7
                         System.Console.WriteLine();
                         i++;
                     }
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("-");
                     System.Console.WriteLine();
                     System.Console.WriteLine();
                     break;
                 case "cnst":
                     System.Console.WriteLine("CONST");
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("_");
                     System.Console.WriteLine();
                     foreach (string line in cnstArray) {
-                        System.Console.Write(">  ");
+                        System.Console.Write("-  ");
                      //   System.Console.Write(i + ":");
                         System.Console.Write(line);
                         for (int j = line.Length; j < 46; j++) {
@@ -327,16 +327,16 @@ namespace prk_var7
                         System.Console.WriteLine();
                         i++;
                     }
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("-");
                     System.Console.WriteLine();
                     System.Console.WriteLine();
                     break;
                 case "log":
-                    System.Console.WriteLine("");
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    System.Console.WriteLine("LITERALS");
+                    for (int j = 0; j < 50; j++) System.Console.Write("_");
                     System.Console.WriteLine();
                     foreach (string line in logLine) {
-                        System.Console.Write(">  ");
+                        System.Console.Write("-  ");
                         System.Console.Write(line);
                         for (int j = line.Length; j < 46; j++) {
                             System.Console.Write(" ");
@@ -344,7 +344,7 @@ namespace prk_var7
                  //       System.Console.Write("#");
                         System.Console.WriteLine();
                     }
-                    for (int j = 0; j < 50; j++) System.Console.Write("#");
+                    for (int j = 0; j < 50; j++) System.Console.Write("-");
                     System.Console.WriteLine();
                     System.Console.WriteLine(); break;
             }

@@ -1,0 +1,5 @@
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-function\bin\Debug\prk-function.exe.config
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-function\bin\Debug\prk-function.exe
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-function\bin\Debug\prk-function.pdb
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-function\obj\Debug\prk-function.exe
+C:\Users\mirOo\Documents\Visual Studio 2015\Projects\prk-var7\prk-function\obj\Debug\prk-function.pdb

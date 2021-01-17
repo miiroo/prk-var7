@@ -1,0 +1,5 @@
+while Count <> 0 do
+begin
+p:= NextLine(p);
+dec(count);
+end;
